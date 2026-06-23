@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For The Purple Queen of My Sky Blue Heart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --deep:    #0a0714;
+      --cosmos:  #100b20;
+      --purple:  #9b59e8;
+      --violet:  #c49cff;
+      --sky:     #5ab4d6;
+      --skysoft: #a8dff0;
+      --gold:    #f5d98b;
+      --white:   #f0ebff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--deep);
+      color: var(--white);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Canvas for particles ── */
+    #starfield {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── Layout ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Crown hero ── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 0 40px;
+    }
+
+    .crown {
+      font-size: clamp(56px, 12vw, 96px);
+      line-height: 1;
+      margin-bottom: 32px;
+      filter: drop-shadow(0 0 28px rgba(155,89,232,0.7));
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-12px); }
+    }
+
+    .eyebrow {
+      font-family: 'Lato', sans-serif;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 20px;
+      opacity: 0.8;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(30px, 7vw, 54px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.2;
+      background: linear-gradient(135deg, var(--violet) 0%, var(--skysoft) 60%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 28px;
+    }
+
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--purple), transparent);
+      margin: 0 auto 28px;
+    }
+
+    .hero-sub {
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: var(--skysoft);
+      opacity: 0.7;
+      text-transform: uppercase;
+    }
+
+    .scroll-hint {
+      margin-top: 56px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.4;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    .scroll-hint span { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--violet); }
+
+    .scroll-hint svg { color: var(--violet); }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; }
+      50%       { opacity: 0.7; }
+    }
+
+    /* ── Message section ── */
+    .message-section {
+      padding: 60px 0;
+    }
+
+    .glow-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(180deg, transparent, var(--purple));
+      margin: 0 auto 48px;
+    }
+
+    .letter {
+      background: linear-gradient(160deg, rgba(155,89,232,0.08) 0%, rgba(90,180,214,0.05) 100%);
+      border: 1px solid rgba(155,89,232,0.18);
+      border-radius: 2px;
+      padding: clamp(32px, 6vw, 56px);
+      position: relative;
+    }
+
+    .letter::before {
+      content: '\201C';
+      position: absolute;
+      top: -18px;
+      left: 32px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px;
+      color: var(--purple);
+      opacity: 0.4;
+      line-height: 1;
+    }
+
+    .letter p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(17px, 2.8vw, 21px);
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--white);
+      opacity: 0.92;
+      margin-bottom: 24px;
+    }
+
+    .letter p:last-child { margin-bottom: 0; }
+
+    .letter .highlight {
+      color: var(--violet);
+      font-style: italic;
+    }
+
+    .letter .sky-highlight {
+      color: var(--skysoft);
+      font-style: italic;
+    }
+
+    /* ── Sign-off ── */
+    .signoff {
+      text-align: center;
+      padding: 60px 0 0;
+    }
+
+    .signoff .divider { margin-bottom: 32px; }
+
+    .signoff-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 5vw, 36px);
+      font-style: italic;
+      font-weight: 300;
+      background: linear-gradient(135deg, var(--violet), var(--skysoft));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+
+    .signoff-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--sky);
+      opacity: 0.6;
+    }
+
+    .hearts {
+      margin-top: 48px;
+      font-size: 22px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      animation: heartbeat 1.8s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.15); }
+    }
+
+    /* ── Fade-in on scroll ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .letter { padding: 28px 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .crown, .scroll-hint, .hearts { animation: none; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="crown">&#x1F451;</div>
+    <p class="eyebrow">A message for you, before the day arrives</p>
+    <h1 class="hero-title">The Purple Queen<br>of My Sky Blue Heart</h1>
+    <div class="divider"></div>
+    <p class="hero-sub">Happy Birthday, in advance</p>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <span>Read on</span>
+      <svg width="16" height="22" viewBox="0 0 16 22" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M8 2v18M2 14l6 6 6-6"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- LETTER -->
+  <div class="message-section">
+    <div class="glow-line"></div>
+
+    <div class="letter reveal">
+      <p>
+        Before your birthday arrives and the world rushes in with its noise and celebration, I wanted to reach you first, quietly, in this small and honest space, just to say &mdash; I see you.
+      </p>
+      <p>
+        I see <span class="highlight">The Purple Queen of My Sky Blue Heart</span>, and I need you to know what that means to me. Purple, because you carry a royalty that was never handed to you &mdas[...]
+      </p>
+      <p>
+        And <span class="sky-highlight">sky blue</span> is mine &mdash; the part of me that belongs to you. You colour it. Without you it is just air; with you it is something worth looking up at. My [...]
+      </p>
+      <p>
+        I know we have not been in an easy season. I know there are words we are still learning how to say, distances we are still learning how to close. But I want you to hear this clearly: <span cla[...]
+      </p>
+      <p>
+        You are not just valuable to me &mdash; you are irreplaceable. There is no version of any good thing in my life that does not have you somewhere at the centre of it. Your smile is not somethin[...]
+      </p>
+      <p>
+        So before the candles, before the cake, before the calendar turns &mdash; this is for you, from me. <span class="sky-highlight">Happy birthday, my Queen.</span> May this season bring you every[...]
+      </p>
+    </div>
+
+    <!-- SIGN-OFF -->
+    <div class="signoff reveal">
+      <div class="divider"></div>
+      <p class="signoff-name">The Purple Queen of My Sky Blue Heart</p>
+      <p class="signoff-label">Always yours &mdash; with love that does not waver</p>
+      <div class="hearts" aria-hidden="true">
+        <span style="color:#9b59e8;">&#x2665;</span>
+        <span style="color:#5ab4d6;">&#x2665;</span>
+        <span style="color:#c49cff;">&#x2665;</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── Particle canvas ──
+  const canvas = document.getElementById('starfield');
+  const ctx    = canvas.getContext('2d');
+
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  const COLORS = ['#9b59e8','#c49cff','#5ab4d6','#a8dff0','#f5d98b'];
+
+  function spawn() {
+    return {
+      x:     Math.random() * W,
+      y:     Math.random() * H,
+      r:     Math.random() * 1.6 + 0.4,
+      alpha: Math.random() * 0.6 + 0.1,
+      dx:    (Math.random() - 0.5) * 0.25,
+      dy:    -(Math.random() * 0.35 + 0.1),
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      life:  Math.random() * 300 + 100,
+      age:   0
+    };
+  }
+
+  function init() {
+    particles = Array.from({ length: 140 }, spawn);
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.age++;
+      if (p.age > p.life) { particles[i] = spawn(); continue; }
+      const fade = p.age < 40
+        ? p.age / 40
+        : p.age > p.life - 40
+          ? (p.life - p.age) / 40
+          : 1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.alpha * fade;
+      ctx.fill();
+      p.x += p.dx;
+      p.y += p.dy;
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(tick);
+  }
+
+  resize();
+  init();
+  tick();
+  window.addEventListener('resize', () => { resize(); });
+
+  // ── Scroll reveal ──
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
